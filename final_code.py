@@ -10,18 +10,23 @@ Original file is located at
 # Import necessary libraries
 import pandas as pd
 import numpy as np
+import os
 import gdown
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import mean_squared_error
 from xgboost import XGBRegressor
 
-# Step 0: Download the dataset from Google Drive
-# Use the file ID from your Google Drive link
+# Step 0: Download the dataset from Google Drive if not already downloaded
 file_id = "15MfmIbP8sjEbDeFg915MaEt1TvXP4N-F"
 url = f"https://drive.google.com/uc?id={file_id}"
 output = "cleaned_CAR_DETAILS.csv"
-gdown.download(url, output, quiet=False)
+
+if not os.path.exists(output):
+    print("Downloading dataset...")
+    gdown.download(url, output, quiet=False)
+else:
+    print("Dataset already exists. Skipping download.")
 
 # Step 1: Load and clean dataset
 df = pd.read_csv(output)
